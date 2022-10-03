@@ -9,8 +9,12 @@ const gameOver = document.querySelector('#game-over');
 const continueGame = document.querySelector('#continue');
 const cancelGame = document.querySelector('#cancel');
 const spanTime = document.querySelector('#time');
+const winner = document.querySelector('#winner');
+const playButton = document.querySelector('#playAgain');
+const spanRecord = document.querySelector('#record');
+const pResult = document.querySelector('#result');
 
-
+playButton.addEventListener('click', continuar);
 continueGame.addEventListener('click', continuar);
 cancelGame.addEventListener('click', cancel);
 keyDown.addEventListener('click', clickDown);
@@ -94,6 +98,8 @@ function startGame(){
     }
     if(!timeStar){
         timeStar = Date.now();
+        timeInterval = setInterval(showTime, 100);
+        showRecord();
     }
     deleteMap();
     const mapRows = map.trim().split('\n');
@@ -169,6 +175,24 @@ function levelPassed(){
 }
 function gameWin(){
     console.log('Terminaste el juego');
+    winner.style='display: flex';
+    clearInterval(timeInterval);    
+
+    const recordTime = localStorage.getItem('record-time');
+    const playerTime = Date.now() - timeStar;
+
+    if(recordTime){
+        if(recordTime >= playerTime){
+            localStorage.setItem('record-time', playerTime);
+            pResult.innerText = 'SUEPRASTE EL RECORD';
+        }else{
+            pResult.innerText = 'NO SUEPRASTE EL RECORD';
+        }
+    }else{
+        localStorage.setItem('record-time', playerTime);
+        pResult.innerText = 'Primera vez?';
+    }
+    console.log(recordTime);
 }
 function levelFailed(){
     console.log('level failed');
@@ -181,6 +205,7 @@ function levelFailed(){
         gameOver.style='display: flex';
         // level = 0;
         // lives = 3;
+        clearInterval(timeInterval);
     }
     
     playerPosition.x = undefined;
@@ -190,7 +215,9 @@ function levelFailed(){
 function showLives(){
     spanLives.innerText = emojis["HEART"].repeat(lives);
 }
-
+function showRecord(){
+    spanRecord.innerText = localStorage.getItem('record-time');
+}
 function showTime(){
-    spanTime = Date.now() - timeStar;
+    spanTime.innerText = ((Date.now() - timeStar)/1000).toFixed(3);
 }
