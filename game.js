@@ -4,6 +4,7 @@ const keyDown = document.querySelector('#down');
 const keyUp = document.querySelector('#up');
 const keyRight= document.querySelector('#right');
 const keyLeft = document.querySelector('#left');
+const spanLives = document.querySelector('#lives')
 
 keyDown.addEventListener('click', clickDown);
 keyUp.addEventListener('click', clickUp);
@@ -69,6 +70,7 @@ function startGame(){
     game.textAlign = 'end';
     enemiesPositions = [];
     const map = maps[level];
+    
     if(!map){
         gameWin();
         return;
@@ -77,7 +79,7 @@ function startGame(){
     const mapRows = map.trim().split('\n');
     const mapRowCols = mapRows.map(row => row.trim().split(''));
     
-
+    showLives();
     mapRowCols.forEach((row, rowI) => {
         row.forEach((col, colI) => {
             const emoji = emojis[col];
@@ -150,6 +152,7 @@ function gameWin(){
 function levelFailed(){
     console.log('level failed');
     lives--;
+    
     if(lives > 0){      
         console.log(lives);
     }else{
@@ -160,4 +163,7 @@ function levelFailed(){
     playerPosition.x = undefined;
     playerPosition.y = undefined;
     startGame();
+}
+function showLives(){
+    spanLives.innerHTML = emojis["HEART"].repeat(lives)
 }
