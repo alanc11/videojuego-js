@@ -8,6 +8,8 @@ const spanLives = document.querySelector('#lives');
 const gameOver = document.querySelector('#game-over');
 const continueGame = document.querySelector('#continue');
 const cancelGame = document.querySelector('#cancel');
+const spanTime = document.querySelector('#time');
+
 
 continueGame.addEventListener('click', continuar);
 cancelGame.addEventListener('click', cancel);
@@ -32,11 +34,15 @@ let cowPosition = {
 let enemiesPositions = [];
 let level = 0;
 let lives = 3;
+let timeStar;
+let timePlayer;
+let timeInterval;
+
 function continuar(){
     location.reload();
 }
 function cancel(){
-    gameOver.style='display: none';
+    gameOver.style='display: none ';
 }
 function deleteMap(){
     game.clearRect(0, 0, canvasSize, canvasSize);
@@ -85,6 +91,9 @@ function startGame(){
     if(!map){
         gameWin();
         return;
+    }
+    if(!timeStar){
+        timeStar = Date.now();
     }
     deleteMap();
     const mapRows = map.trim().split('\n');
@@ -179,5 +188,9 @@ function levelFailed(){
     startGame();
 }
 function showLives(){
-    spanLives.innerHTML = emojis["HEART"].repeat(lives);
+    spanLives.innerText = emojis["HEART"].repeat(lives);
+}
+
+function showTime(){
+    spanTime = Date.now() - timeStar;
 }
