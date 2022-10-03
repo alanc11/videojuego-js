@@ -86,7 +86,6 @@ function clickLeft(){
     }
 }
 function startGame(){
-    
     game.font = elementsSize + 'px Helvetica';
     game.textAlign = 'end';
     enemiesPositions = [];
@@ -137,8 +136,10 @@ function setCanvasSize(){
     }
     canvas.setAttribute('width', canvasSize);
     canvas.setAttribute('height', canvasSize);
-    elementsSize = canvasSize / 10.1;
+    elementsSize = canvasSize / 10.23;
     console.log('Canvas Size: ' + canvasSize);
+    playerPosition.x = undefined;
+    playerPosition.y = undefined;
     startGame();
 }
 
