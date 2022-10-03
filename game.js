@@ -4,8 +4,13 @@ const keyDown = document.querySelector('#down');
 const keyUp = document.querySelector('#up');
 const keyRight= document.querySelector('#right');
 const keyLeft = document.querySelector('#left');
-const spanLives = document.querySelector('#lives')
+const spanLives = document.querySelector('#lives');
+const gameOver = document.querySelector('#game-over');
+const continueGame = document.querySelector('#continue');
+const cancelGame = document.querySelector('#cancel');
 
+continueGame.addEventListener('click', continuar);
+cancelGame.addEventListener('click', cancel);
 keyDown.addEventListener('click', clickDown);
 keyUp.addEventListener('click', clickUp);
 keyRight.addEventListener('click', clickRight);
@@ -27,6 +32,12 @@ let cowPosition = {
 let enemiesPositions = [];
 let level = 0;
 let lives = 3;
+function continuar(){
+    location.reload();
+}
+function cancel(){
+    gameOver.style='display: none';
+}
 function deleteMap(){
     game.clearRect(0, 0, canvasSize, canvasSize);
 }
@@ -123,7 +134,7 @@ function keyPressed(key){
     else if(key.keyCode == '39')clickRight();
 }
 function movePlayer(){
-    game.fillText(emojis['PLAYER'], playerPosition.x + 10, playerPosition.y - 5);
+   
     let xp = Math.floor(playerPosition.x); 
     let yp = Math.floor(playerPosition.y); 
     let xc = Math.floor(cowPosition.x); 
@@ -140,6 +151,7 @@ function movePlayer(){
     if(enemyColision){
         levelFailed();
     }
+    game.fillText(emojis['PLAYER'], playerPosition.x + 10, playerPosition.y - 5);
 }
 function levelPassed(){
     console.log('Subiste de nivel');
@@ -155,9 +167,11 @@ function levelFailed(){
     
     if(lives > 0){      
         console.log(lives);
+        gameOver.style='display: none';
     }else{
-        level = 0;
-        lives = 3;
+        gameOver.style='display: flex';
+        // level = 0;
+        // lives = 3;
     }
     
     playerPosition.x = undefined;
@@ -165,5 +179,5 @@ function levelFailed(){
     startGame();
 }
 function showLives(){
-    spanLives.innerHTML = emojis["HEART"].repeat(lives)
+    spanLives.innerHTML = emojis["HEART"].repeat(lives);
 }
