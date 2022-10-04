@@ -180,7 +180,7 @@ function gameWin(){
     clearInterval(timeInterval);    
 
     const recordTime = localStorage.getItem('record-time');
-    const playerTime = Date.now() - timeStar;
+    const playerTime = (Date.now() - timeStar)/1000;
 
     if(recordTime){
         if(recordTime >= playerTime){
