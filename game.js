@@ -185,9 +185,9 @@ function gameWin(){
     if(recordTime){
         if(recordTime >= playerTime){
             localStorage.setItem('record-time', playerTime);
-            pResult.innerText = 'SUEPRASTE EL RECORD';
+            pResult.innerText = 'SUPERASTE EL RECORD';
         }else{
-            pResult.innerText = 'NO SUEPRASTE EL RECORD';
+            pResult.innerText = 'NO SUPERASTE EL RECORD';
         }
     }else{
         localStorage.setItem('record-time', playerTime);
